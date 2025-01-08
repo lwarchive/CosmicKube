@@ -12,7 +12,7 @@ env:
 jobs:
   export-web:
     name: "Export for Web"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     container:
       image: barichello/godot-ci:4.2.1
     steps:
@@ -48,6 +48,15 @@ jobs:
         with:
           name: web
           path: build/web
+
+  deploy-to-azure:
+    name: "Deploy to Azure"
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: web
+          path: web
       - name: Login to Azure CLI
         uses: azure/login@v1
         with:
@@ -58,7 +67,7 @@ jobs:
         with:
           inlineScript: |
             az storage blob delete-batch --account-name "${{ vars.STORAGE_ACCOUNT_NAME }}" --auth-mode key -s '$web' --pattern "cosmickube/*"
-            az storage blob upload-batch --account-name "${{ vars.STORAGE_ACCOUNT_NAME }}" --auth-mode key -d '$web' --destination-path cosmickube -s build/web
+            az storage blob upload-batch --account-name "${{ vars.STORAGE_ACCOUNT_NAME }}" --auth-mode key -d '$web' --destination-path cosmickube -s web
 
       - name: Logout from Azure CLI
         run: |
