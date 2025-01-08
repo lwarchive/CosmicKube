@@ -48,6 +48,10 @@ jobs:
         with:
           name: web
           path: build/web
+      - name: Login to Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_LOGIN }}
 
       - name: Upload to blob storage
         uses: azure/CLI@v1
