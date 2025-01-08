@@ -44,7 +44,7 @@ jobs:
           echo "${{ vars.STATIC_WEB_APP_CONFIG }}" > staticwebapp.config.json
           ls
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: web
           path: build/web
