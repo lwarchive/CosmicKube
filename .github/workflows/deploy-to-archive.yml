@@ -1,4 +1,4 @@
-name: "Build CosmicKube game client"
+name: "Deploy to archive"
 on:
   push:
     branches:
