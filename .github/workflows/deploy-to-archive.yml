@@ -58,6 +58,14 @@ jobs:
         with:
           name: web
           path: web
+
+      - name: Fix pathes
+        shell: bash
+        run: |
+          cd web
+          sed -i "s|href='\([^']*\)'|href='/cosmickube/\1'|g" index.html
+          sed -i 's|src="\([^"]*\)"|src="/cosmickube/\1"|g' index.html
+
       - name: Login to Azure CLI
         uses: azure/login@v1
         with:
